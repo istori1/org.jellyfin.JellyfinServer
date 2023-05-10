@@ -33,7 +33,7 @@ jobs:
           sudo su $(whoami) -c '
             flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           '
-          flatpak install flathub org.flatpak.Builder org.flathub.flatpak-external-data-checker -y
+          sudo su $(whoami) -c 'flatpak install flathub org.flatpak.Builder org.flathub.flatpak-external-data-checker -y'
 
       - name: Clone flatpak tools
         run: |
