@@ -57,7 +57,7 @@ modules:
       arch:
         x86_64:
           config-opts:
-            - --enable-libmfx # intel-mediasdk
+            - --enable-libvpl
     config-opts:
       - --disable-doc
       - --disable-ffplay
@@ -105,19 +105,16 @@ modules:
       - --enable-vaapi
       - --enable-version3
       - --enable-vulkan
-      - --extra-libs=-lfftw3f
       - --extra-version=Jellyfin
       - --target-os=linux
     sources:
       - type: git
-        url: https://github.com/jellyfin/jellyfin-ffmpeg.git
-        commit: 15c9d4fb34b2aa91619c351c87cfc060dfe94b8a
-        tag: v5.1.3-1
+        url: https://github.com/nyanmisaka/jellyfin-ffmpeg.git
+        commit: 166781449613e5835f7e07e8801803c44592158c
+        tag: v6.0-3
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)-\d$
-          versions:
-            <: '6.0'
       - type: shell
         commands:
           - cat debian/patches/*.patch | patch -Np1 -d .
@@ -574,13 +571,11 @@ modules:
         sources:
           - type: git
             url: https://gitlab.com/AOMediaCodec/SVT-AV1.git
-            commit: 018276d714ce65d9b586f6205ee016cbd8d5425d
-            tag: v1.4.1
+            commit: ea296ef350714fb6f105b420fb0bc321d9997ffd
+            tag: v1.5.0
             x-checker-data:
               type: git
               tag-pattern: ^v([\d.]+)$
-              versions:
-                <: 1.5.0
 
   - name: clinfo
     buildsystem: simple
@@ -638,8 +633,8 @@ modules:
     sources:
       - npm-generated-sources.json
       - type: git
-        url: https://github.com/jellyfin/jellyfin-web.git
-        commit: 55714d5341d6bbfdb4d8b0b4c9b6955d4db14f34
+        url: https://github.com/nyanmisaka/jellyfin-web.git
+        commit: 8dc342a88a28d86b5ea4258bb8577b3ec6613408
         tag: v10.8.10
         x-checker-data:
           type: git
@@ -676,8 +671,8 @@ modules:
       - nuget-generated-sources-x64.json
       - nuget-generated-sources-arm64.json
       - type: git
-        url: https://github.com/jellyfin/jellyfin.git
-        commit: 2cd29d1cfd5cb2586aab3862e857dc85e0117ca4
+        url: https://github.com/nyanmisaka/jellyfin.git
+        commit: 99999bd220decfadc249e07a79f5e4619ef7d92a
         tag: v10.8.10
         x-checker-data:
           type: git

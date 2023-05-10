@@ -1,0 +1,73 @@
+name: Flatpak Builder
+
+on:
+  # push:
+  #   branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build_native_flatpak:
+    name: Build Flatpak
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Builder Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.local/share/flatpak
+            .flatpak-builder
+          key: flatpak-x86_64-${{ github.sha }}
+          restore-keys: |
+            flatpak
+
+      - name: Setup Dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install flatpak yamllint -y
+          sudo su $(whoami) -c '
+            flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          '
+          sudo su $(whoami) -c 'flatpak install flathub org.flatpak.Builder org.flathub.flatpak-external-data-checker -y'
+
+      - name: YAML Lint
+        env:
+          FLATPAK_MANIFEST: org.jellyfin.JellyfinServer.yml
+        run: |
+          yamllint ${FLATPAK_MANIFEST}
+
+      - name: External Data Checker
+        env:
+          FLATPAK_MANIFEST: org.jellyfin.JellyfinServer.yml
+        run: |
+          flatpak run org.flathub.flatpak-external-data-checker $FLATPAK_MANIFEST
+
+      - name: Build Flatpak
+        run: |
+          sudo su $(whoami) -c '
+            FLATPAK_MANIFEST=org.jellyfin.JellyfinServer.yml
+
+            flatpak run org.flatpak.Builder --user --repo=local_repo --install-deps-from=flathub \
+            --force-clean --default-branch=test build $FLATPAK_MANIFEST
+          '
+
+      - name: Bundle Flatpak
+        env:
+          FLATPAK_ID: org.jellyfin.JellyfinServer
+        run: |
+          mkdir artifacts
+          flatpak repo --branches local_repo
+          flatpak build-bundle local_repo artifacts/${FLATPAK_ID}_$(uname -m).flatpak $FLATPAK_ID test
+          flatpak build-bundle --runtime local_repo artifacts/${FLATPAK_ID}_Debug_$(uname -m).flatpak $FLATPAK_ID.Debug test
+
+      - name: Upload Flatpak Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: flatpak-bundle
+          path: artifacts
