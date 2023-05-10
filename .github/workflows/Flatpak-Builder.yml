@@ -26,6 +26,7 @@ jobs:
           key: flatpak-x86_64-${{ github.sha }}
           restore-keys: |
             flatpak
+
       - name: Setup Dependencies
         run: |
           sudo apt update -y
