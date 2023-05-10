@@ -32,7 +32,7 @@ jobs:
           sudo apt update -y
           sudo apt install flatpak yamllint -y
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install flathub org.flatpak.Builder org.flathub.flatpak-external-data-checker -y
+          flatpak install --user flathub org.flatpak.Builder org.flathub.flatpak-external-data-checker -y
 
       - name: Clone flatpak tools
         run: |
