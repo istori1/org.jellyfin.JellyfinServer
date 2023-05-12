@@ -1,0 +1,11 @@
+--- ~/MediaBrowser.Controller/MediaEncoding/EncodingHelper.cs
++++ ~/MediaBrowser.Controller/MediaEncoding/EncodingHelper.cs
+@@ -1544,7 +1544,7 @@
+                     "veryfast" => " -preset 11",
+                     "superfast" => " -preset 12",
+                     "ultrafast" => " -preset 13",
+-                    _ => " preset 10"
++                    _ => " -preset 10"
+                 };
+             }
+             else if (string.Equals(videoEncoder, "h264_qsv", StringComparison.OrdinalIgnoreCase) // h264 (h264_qsv)

@@ -703,6 +703,8 @@ modules:
       - type: git
         url: https://github.com/nyanmisaka/jellyfin.git
         commit: 99999bd220decfadc249e07a79f5e4619ef7d92a
+      - type: patch
+        path: fix_preset.patch
       - type: file
         path: org.jellyfin.JellyfinServer.metainfo.xml
       - type: file
