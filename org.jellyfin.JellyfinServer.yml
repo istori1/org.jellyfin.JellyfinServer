@@ -110,7 +110,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/nyanmisaka/jellyfin-ffmpeg.git
-        commit: 166781449613e5835f7e07e8801803c44592158c
+        commit: 798c7c05179ec5119a470c9b22e94a6f54ce21cc
       - type: shell
         commands:
           - cat debian/patches/*.patch | patch -Np1 -d .
