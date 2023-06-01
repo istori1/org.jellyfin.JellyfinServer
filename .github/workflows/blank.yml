@@ -18,7 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Make changes to pull request here
+      - name: Make Change
+        run: |
+          touch empty.txt
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
