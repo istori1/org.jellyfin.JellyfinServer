@@ -25,9 +25,9 @@ jobs:
       packages: write
       pages: write
       pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
+#       repository-projects: write
+#       security-events: write
+#       statuses: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
