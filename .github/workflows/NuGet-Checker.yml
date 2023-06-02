@@ -20,7 +20,7 @@ jobs:
       - name: Check if branch exist
         working-directory: main
         run: |
-          if [ "$(git ls-remote --heads origin update-nuget)" = "" ]; then
+          if [ "$(git ls-remote --heads origin update-nuget)" != "" ]; then
             echo "::error ::Branch update-nuget exist. Merge PR or delete the branch"
           fi
 
