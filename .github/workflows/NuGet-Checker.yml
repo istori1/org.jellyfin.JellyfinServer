@@ -22,6 +22,7 @@ jobs:
         run: |
           if [ "$(git ls-remote --heads origin update-nuget)" != "" ]; then
             echo "::error ::Branch update-nuget exist. Merge PR or delete the branch"
+            exit 1
           fi
 
       - name: Flatpak Cache
