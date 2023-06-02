@@ -33,7 +33,6 @@ jobs:
             flatpak
 
       - name: Setup Dependencies
-        if: false
         run: |
           sudo apt update -y
           sudo apt install flatpak -y
@@ -44,7 +43,7 @@ jobs:
       - name: Set ENV Variables
         run: |
           echo "RUNTIME-VERSIONFROMYAML=$(yq '.runtime-version' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
-          echo "DOTNETSDKFROMYAML=$(yq '.runtime-version' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
+          echo "DOTNETSDKFROMYAML=$(yq '.sdk-extensions[0]' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
           echo "TAGFROMYAML=$(yq '.modules[-1].sources[2].tag' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
 
       - name: Checkout Jellyfin
