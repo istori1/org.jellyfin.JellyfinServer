@@ -67,11 +67,12 @@ jobs:
           ./flatpak-builder-tools/dotnet/flatpak-dotnet-generator.py \
             --runtime=linux-arm64 main/nuget-generated-sources-arm64.json jellyfin/Jellyfin.Server/Jellyfin.Server.csproj
 
-      - name: Check for branch
+      - name: Check if branch exist
+        working-directory: main
         run: |
-          cd main && git ls-remote --heads origin update-nuget
-          cd main && git ls-remote --heads origin udhhbvzdncdsdfsdf
-          [[ -z $(cd main && git ls-remote --heads origin update-nuget) ]]
+          git ls-remote --heads origin update-nuget
+          git ls-remote --heads origin udhhbvzdncdsdfsdf
+          [[ -z $(git ls-remote --heads origin update-nuget) ]]
 
       - name: Create Pull Request
         if: false
