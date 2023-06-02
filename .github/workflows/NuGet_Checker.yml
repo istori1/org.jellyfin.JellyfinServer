@@ -66,3 +66,5 @@ jobs:
           # branch-suffix: random
           title: Update NuGet Cache
           commit-message: Update NuGet Cache
+          branch: update-nuget
+          delete-branch: true
