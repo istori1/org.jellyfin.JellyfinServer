@@ -18,6 +18,7 @@ jobs:
           path: main
 
       - name: Flatpak Cache
+        if: false
         uses: actions/cache@v3
         with:
           path: |
@@ -27,6 +28,7 @@ jobs:
             flatpak
 
       - name: Setup Dependencies
+        if: false
         run: |
           sudo apt update -y
           sudo apt install flatpak -y
@@ -35,12 +37,14 @@ jobs:
           sudo su $(whoami) -c 'flatpak install flathub org.flatpak.Builder -y'
 
       - name: Set ENV Variables
+        if: false
         run: |
           echo "RUNTIME-VERSIONFROMYAML=$(yq '.runtime-version' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
           echo "DOTNETSDKFROMYAML=$(yq '.sdk-extensions[0]' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
           echo "TAGFROMYAML=$(yq '.modules[-1].sources[2].tag' main/org.jellyfin.JellyfinServer.yml)" >> "$GITHUB_ENV"
 
       - name: Checkout Jellyfin
+        if: false
         uses: actions/checkout@v3
         with:
           repository: jellyfin/jellyfin
@@ -48,12 +52,14 @@ jobs:
           ref: ${{ env.TAGFROMYAML }}
 
       - name: Checkout Flatpak Builder Tools
+        if: false
         uses: actions/checkout@v3
         with:
           repository: flatpak/flatpak-builder-tools
           path: flatpak-builder-tools
 
       - name: Generate cache for NuGet
+        if: false
         run: |
           sudo su $(whoami) -c 'flatpak install flathub ${{ env.DOTNETSDKFROMYAML }}//${{ env.RUNTIME-VERSIONFROMYAML }} -y'
           ./flatpak-builder-tools/dotnet/flatpak-dotnet-generator.py \
@@ -61,7 +67,12 @@ jobs:
           ./flatpak-builder-tools/dotnet/flatpak-dotnet-generator.py \
             --runtime=linux-arm64 main/nuget-generated-sources-arm64.json jellyfin/Jellyfin.Server/Jellyfin.Server.csproj
 
+      - name: Check for branch
+        run: |
+          cd main && git ls-remote --heads origin update-nuget
+
       - name: Create Pull Request
+        if: false
         uses: peter-evans/create-pull-request@v5
         with:
           path: main
