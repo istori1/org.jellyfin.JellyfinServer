@@ -70,10 +70,12 @@ jobs:
       - name: Check if branch exist
         working-directory: main
         run: |
-          git ls-remote --heads origin update-nuget
-          # git ls-remote --heads origin udhhbvzdncdsdfsdf
-          echo [[ -z $(git ls-remote --heads origin update-nuget) ]]
-          echo [[ -z $(git ls-remote --heads origin update-fgdgdfhgdfg) ]]
+          if [ $(git ls-remote --heads origin update-nuget) = "" ]; then
+            echo "CREATEPULLREQUEST=true" >> "$GITHUB_ENV"
+          else
+            echo "CREATEPULLREQUEST=false" >> "$GITHUB_ENV"
+          fi
+          echo ${{ env.CREATEPULLREQUEST }}
 
       - name: Create Pull Request
         if: false
