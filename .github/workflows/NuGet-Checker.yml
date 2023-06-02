@@ -70,6 +70,8 @@ jobs:
       - name: Check for branch
         run: |
           cd main && git ls-remote --heads origin update-nuget
+          cd main && git ls-remote --heads origin udhhbvzdncdsdfsdf
+          [[ -z $(cd main && git ls-remote --heads origin update-nuget) ]]
 
       - name: Create Pull Request
         if: false
