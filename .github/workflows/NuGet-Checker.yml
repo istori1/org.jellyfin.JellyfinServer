@@ -71,8 +71,9 @@ jobs:
         working-directory: main
         run: |
           git ls-remote --heads origin update-nuget
-          git ls-remote --heads origin udhhbvzdncdsdfsdf
+          # git ls-remote --heads origin udhhbvzdncdsdfsdf
           [[ -z $(git ls-remote --heads origin update-nuget) ]]
+          [[ -z $(git ls-remote --heads origin update-fgdgdfhgdfg) ]]
 
       - name: Create Pull Request
         if: false
